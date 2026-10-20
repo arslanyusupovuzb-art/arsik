@@ -31,7 +31,7 @@ button { border: 0; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: white; }
 input, textarea, select { color: var(--fg); }
-input::placeholder, textarea::placeholder { color: #777780; }
+input::placeholder, textarea::placeholder { color: #8b8b98; }
 button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid #b7b7c3; outline-offset: 4px;
 }

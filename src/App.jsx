@@ -5,7 +5,7 @@ import { Command } from 'cmdk';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Toaster, toast } from 'sonner';
 import { Avatar, Icon, Logo } from './Icons.jsx';
-import { categories, createOrderSpec, filterProducts, money, products } from './catalog.js';
+import { categories, createOrderSpec, filterProducts, money, products, productSearchFilter } from './catalog.js';
 
 const easeOut = [0.23, 1, 0.32, 1];
 const numberTiming = { duration: 220, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' };
@@ -238,7 +238,7 @@ export default function App() {
           {dialog.type === 'guide' && <HowItWorks/>}
           {dialog.type === 'search' && <>
             <Dialog.Title className="sr-only">Search the collection</Dialog.Title><Dialog.Description className="sr-only">Search plans by platform, title, coverage, or account type. Use arrow keys to navigate and Enter to view a plan.</Dialog.Description>
-            <Command loop label="Product search">
+            <Command loop label="Product search" filter={productSearchFilter}>
               <div className="command-input-row"><Icon name="search" size={19}/><Command.Input ref={searchInputRef} value={search} onValueChange={setSearch} placeholder="What will you build with?" aria-label="Search the collection"/></div>
               <Command.List>
                 <Command.Empty><Icon name="search" size={24}/><strong>No tools found</strong><p>Try “ChatGPT”, “personal”, or “Cursor”.</p></Command.Empty>

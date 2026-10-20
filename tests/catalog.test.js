@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { products, categories, filterProducts, createOrderSpec, money } from '../src/catalog.js';
+import { products, categories, filterProducts, createOrderSpec, money, productSearchFilter } from '../src/catalog.js';
 
 test('catalog preserves all supplied prices, coverage, and category totals', () => {
   assert.equal(products.length, 13);
@@ -49,4 +49,12 @@ test('no-warranty products retain their terms in the copied specification', () =
   assert.match(spec, /Listed coverage: No Warranty/);
   assert.match(spec, /Account access details by email/);
   assert.match(spec, /Total: \$119\.89/);
+});
+
+test('command search matches complete query terms without broad fuzzy false positives', () => {
+  const find = query => products.filter(p => productSearchFilter(p.title, query, [p.type,p.warranty,p.description]));
+  assert.deepEqual(find('Cursor').map(p => p.id), ['cursor-pro','cursor-ultra']);
+  assert.equal(find('personal 90')[0].id, 'grok-quarterly');
+  assert.equal(find('unlikely-nonexistent-plan-xyz').length, 0);
+  assert.equal(find('  CLAUDE  ').length, 2);
 });

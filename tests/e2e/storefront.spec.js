@@ -38,8 +38,11 @@ test('command search supports shortcuts, empty results, and selection', async ({
   await expect(page.getByText('No tools found')).toBeVisible();
   await input.fill('Cursor');
   await expect(page.getByRole('option')).toHaveCount(2);
-  await page.getByRole('option',{name:/Cursor Pro/}).click();
-  await expect(page.getByRole('dialog')).toContainText('Cursor Pro — 2-Month Developer Pass');
+  await expect(page.getByRole('option',{name:/Cursor Pro/})).toHaveAttribute('aria-selected','true');
+  await input.press('ArrowDown');
+  await expect(page.getByRole('option',{name:/Cursor Ultra/})).toHaveAttribute('aria-selected','true');
+  await input.press('Enter');
+  await expect(page.getByRole('dialog')).toContainText('Cursor Ultra — 1-Month Uncapped Power');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.getByRole('button',{name:'Search products',exact:true})).toBeFocused();

@@ -178,3 +178,9 @@ export function createOrderSpec(product, quantity, email) {
     'This is an order specification, not a payment receipt or confirmation.',
   ].join('\n');
 }
+
+export function productSearchFilter(value, query, keywords = []) {
+  const haystack = [value, ...keywords].join(' ').toLowerCase();
+  const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  return terms.every((term) => haystack.includes(term)) ? 1 : 0;
+}
